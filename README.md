@@ -1,8 +1,8 @@
-# Miscellanea for CommonCore RPG Libraries for Unity
+# Miscellanea for CommonCore Framework for Unity
 
 ## Introduction
 
-Various bits and pieces for [CommonCore RPG Library](https://github.com/XCVG/commoncore/). A bit of a dumping ground which will hopefully get more organized as time goes on.
+Various bits and pieces for [CommonCore](https://github.com/XCVG/commoncore/). A bit of a dumping ground which will hopefully get more organized as time goes on.
 
 ## Index
 
