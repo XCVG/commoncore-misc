@@ -2,10 +2,12 @@ using CommonCore.Config;
 using CommonCore.RpgGame;
 using CommonCore.RpgGame.Rpg;
 using CommonCore.World;
+using System;
 using UnityEngine;
 
 namespace CommonCore.Compatibility
 {
+
     /// <summary>
     /// Old default implementation of RPG values/calculations as used in Californium (Ascension III)
     /// </summary>
@@ -21,8 +23,8 @@ namespace CommonCore.Compatibility
         public int PotentialPointsForLevel(int newLevel, CharacterModel character)
         {
             return (2
-                + (int)(0.5f * (float)character.BaseStats.Stats[(int)StatType.Erudition])
-                + (int)(0.25f * (float)character.BaseStats.Stats[(int)StatType.Intuition])
+                + (int)(0.5f * (float)character.BaseStats.Stats[(int)CaliforniumStatType.Erudition])
+                + (int)(0.25f * (float)character.BaseStats.Stats[(int)CaliforniumStatType.Intuition])
                 );
         }
 
@@ -65,19 +67,19 @@ namespace CommonCore.Compatibility
         public float MaxEnergy(CharacterModel characterModel)
         {
             return Mathf.FloorToInt(100
-                + characterModel.DerivedStats.Stats[(int)StatType.Dexterity] * 5.0f
-                + characterModel.DerivedStats.Stats[(int)StatType.Resilience] * 10.0f
-                + characterModel.DerivedStats.Skills[(int)SkillType.Athletics] * 0.5f
-                + characterModel.DerivedStats.Skills[(int)SkillType.AthleticsFleet] * 0.25f) * ConfigState.Instance.GetGameplayConfig().Difficulty.PlayerEndurance;
+                + characterModel.DerivedStats.Stats[(int)CaliforniumStatType.Dexterity] * 5.0f
+                + characterModel.DerivedStats.Stats[(int)CaliforniumStatType.Resilience] * 10.0f
+                + characterModel.DerivedStats.Skills[(int)CaliforniumSkillType.Athletics] * 0.5f
+                + characterModel.DerivedStats.Skills[(int)CaliforniumSkillType.AthleticsFleet] * 0.25f) * ConfigState.Instance.GetGameplayConfig().Difficulty.PlayerEndurance;
         }
 
         public float MaxMagic(CharacterModel characterModel)
         {
             return Mathf.FloorToInt(100
-                + characterModel.DerivedStats.Stats[(int)StatType.Erudition] * 5.0f
-                + characterModel.DerivedStats.Stats[(int)StatType.Intuition] * 5.0f
-                + characterModel.DerivedStats.Stats[(int)StatType.Serendipity] * 5.0f
-                + characterModel.DerivedStats.Skills[(int)SkillType.Magic] * 0.5f);
+                + characterModel.DerivedStats.Stats[(int)CaliforniumStatType.Erudition] * 5.0f
+                + characterModel.DerivedStats.Stats[(int)CaliforniumStatType.Intuition] * 5.0f
+                + characterModel.DerivedStats.Stats[(int)CaliforniumStatType.Serendipity] * 5.0f
+                + characterModel.DerivedStats.Skills[(int)CaliforniumSkillType.Magic] * 0.5f);
         }
 
 
@@ -119,11 +121,11 @@ namespace CommonCore.Compatibility
         public int AdjustedBuyPrice(CharacterModel character, float value)
         {
             float adjValue = (value * 2.0f)
-                - (character.DerivedStats.Skills[(int)SkillType.Social] / 200 * value)
-                - (character.DerivedStats.Skills[(int)SkillType.SocialExchange] / 100 * value)
-                - (character.DerivedStats.Skills[(int)SkillType.SocialLeverage] / 200 * value)
-                - (character.DerivedStats.Stats[(int)StatType.Dialectic] / 1000 * value)
-                - (character.DerivedStats.Stats[(int)StatType.Subterfuge] / 1000 * value);
+                - (character.DerivedStats.Skills[(int)CaliforniumSkillType.Social] / 200 * value)
+                - (character.DerivedStats.Skills[(int)CaliforniumSkillType.SocialExchange] / 100 * value)
+                - (character.DerivedStats.Skills[(int)CaliforniumSkillType.SocialLeverage] / 200 * value)
+                - (character.DerivedStats.Stats[(int)CaliforniumStatType.Dialectic] / 1000 * value)
+                - (character.DerivedStats.Stats[(int)CaliforniumStatType.Subterfuge] / 1000 * value);
 
             return Mathf.CeilToInt(Mathf.Max(value, adjValue));
         }
@@ -133,11 +135,11 @@ namespace CommonCore.Compatibility
             float halfValue = value * 0.5f;
 
             float adjValue = halfValue
-                + (character.DerivedStats.Skills[(int)SkillType.Social] / 200 * halfValue)
-                + (character.DerivedStats.Skills[(int)SkillType.SocialExchange] / 200 * halfValue)
-                + (character.DerivedStats.Skills[(int)SkillType.SocialLeverage] / 200 * halfValue)
-                + (character.DerivedStats.Stats[(int)StatType.Dialectic] / 1000 * halfValue)
-                + (character.DerivedStats.Stats[(int)StatType.Subterfuge] / 1000 * halfValue);
+                + (character.DerivedStats.Skills[(int)CaliforniumSkillType.Social] / 200 * halfValue)
+                + (character.DerivedStats.Skills[(int)CaliforniumSkillType.SocialExchange] / 200 * halfValue)
+                + (character.DerivedStats.Skills[(int)CaliforniumSkillType.SocialLeverage] / 200 * halfValue)
+                + (character.DerivedStats.Stats[(int)CaliforniumStatType.Dialectic] / 1000 * halfValue)
+                + (character.DerivedStats.Stats[(int)CaliforniumStatType.Subterfuge] / 1000 * halfValue);
 
             return Mathf.FloorToInt(Mathf.Min(adjValue, value));
         }
@@ -245,9 +247,9 @@ namespace CommonCore.Compatibility
         public float DetectionChance(CharacterModel character, bool isSneaking, bool isRunning)
         {
 
-            float r1 = character.DerivedStats.Skills[(int)SkillType.AthleticsFurtive];
-            float r2 = character.DerivedStats.Skills[(int)SkillType.Athletics] * 0.25f;
-            float r3 = character.DerivedStats.Stats[(int)StatType.Dexterity] * 2f;
+            float r1 = character.DerivedStats.Skills[(int)CaliforniumSkillType.AthleticsFurtive];
+            float r2 = character.DerivedStats.Skills[(int)CaliforniumSkillType.Athletics] * 0.25f;
+            float r3 = character.DerivedStats.Stats[(int)CaliforniumStatType.Dexterity] * 2f;
             float rawChance = (100f - (r1 + r2 + r3)) / 100f;
 
             rawChance *= isSneaking ? 0.5f : 1.0f;
@@ -261,9 +263,9 @@ namespace CommonCore.Compatibility
         public float GetMoveSpeedMultiplier(CharacterModel character)
         {
             float rawSpeed = 1f
-                + (character.DerivedStats.Stats[(int)StatType.Dexterity] / 50f)
-                + (character.DerivedStats.Skills[(int)SkillType.AthleticsFleet] / 150f)
-                + (character.DerivedStats.Skills[(int)SkillType.Athletics] / 300f);
+                + (character.DerivedStats.Stats[(int)CaliforniumStatType.Dexterity] / 50f)
+                + (character.DerivedStats.Skills[(int)CaliforniumSkillType.AthleticsFleet] / 150f)
+                + (character.DerivedStats.Skills[(int)CaliforniumSkillType.Athletics] / 300f);
             return Mathf.Clamp(rawSpeed, 0.75f, 1.75f) * ConfigState.Instance.GetGameplayConfig().Difficulty.PlayerAgility;
         }
 
@@ -275,8 +277,8 @@ namespace CommonCore.Compatibility
         public float GetRunEnergyRate(CharacterModel character)
         {
             float rawRate = 1f
-                - (character.DerivedStats.Skills[(int)SkillType.AthleticsFleet] / 500f)
-                - (character.DerivedStats.Skills[(int)SkillType.Athletics] / 500f);
+                - (character.DerivedStats.Skills[(int)CaliforniumSkillType.AthleticsFleet] / 500f)
+                - (character.DerivedStats.Skills[(int)CaliforniumSkillType.Athletics] / 500f);
 
             return Mathf.Min(0.1f, rawRate);
         }
@@ -284,9 +286,9 @@ namespace CommonCore.Compatibility
         public float GetJumpVelocityMultiplier(CharacterModel character)
         {
             float rawMultiplier = 1f
-                + (character.DerivedStats.Stats[(int)StatType.Dexterity] / 100f)
-                + (character.DerivedStats.Skills[(int)SkillType.AthleticsFleet] / 200f)
-                + (character.DerivedStats.Skills[(int)SkillType.Athletics] / 500f);
+                + (character.DerivedStats.Stats[(int)CaliforniumStatType.Dexterity] / 100f)
+                + (character.DerivedStats.Skills[(int)CaliforniumSkillType.AthleticsFleet] / 200f)
+                + (character.DerivedStats.Skills[(int)CaliforniumSkillType.Athletics] / 500f);
 
             return Mathf.Clamp(rawMultiplier, 0.75f, 1.5f) * ConfigState.Instance.GetGameplayConfig().Difficulty.PlayerAgility;
         }
@@ -294,7 +296,7 @@ namespace CommonCore.Compatibility
         public float GetJumpEnergyUse(CharacterModel character)
         {
             return 10f
-                - (character.DerivedStats.Skills[(int)SkillType.Athletics] / 50f); //athletics very slightly reduces energy use
+                - (character.DerivedStats.Skills[(int)CaliforniumSkillType.Athletics] / 50f); //athletics very slightly reduces energy use
         }
 
         public float GetAirMoveMultiplier(CharacterModel character)
@@ -305,9 +307,9 @@ namespace CommonCore.Compatibility
         public float GetIdleEnergyRecoveryRate(CharacterModel character)
         {
             return 5f
-                + (character.DerivedStats.Stats[(int)StatType.Dexterity] / 2f)
-                + (character.DerivedStats.Stats[(int)StatType.Resilience] / 5f)
-                + (character.DerivedStats.Skills[(int)SkillType.Athletics] / 100f);
+                + (character.DerivedStats.Stats[(int)CaliforniumStatType.Dexterity] / 2f)
+                + (character.DerivedStats.Stats[(int)CaliforniumStatType.Resilience] / 5f)
+                + (character.DerivedStats.Skills[(int)CaliforniumSkillType.Athletics] / 100f);
         }
 
         public float GetMovingEnergyRecoveryRate(CharacterModel character)
@@ -322,9 +324,9 @@ namespace CommonCore.Compatibility
             //higher is better
             return Mathf.Clamp(
                     1.0f
-                    + (character.DerivedStats.Stats[(int)StatType.Resilience] / 20f)
-                    + (character.DerivedStats.Stats[(int)StatType.Dexterity] / 30f)
-                    + (character.DerivedStats.Skills[(int)SkillType.MeleeBrawn] / 100f)
+                    + (character.DerivedStats.Stats[(int)CaliforniumStatType.Resilience] / 20f)
+                    + (character.DerivedStats.Stats[(int)CaliforniumStatType.Dexterity] / 30f)
+                    + (character.DerivedStats.Skills[(int)CaliforniumSkillType.MeleeBrawn] / 100f)
                     + (character.DerivedStats.Skills[(int)SkillType.Melee] / 200f),
                 0.5f, 3.0f) * ConfigState.Instance.GetGameplayConfig().Difficulty.PlayerStrength;
         }
@@ -334,9 +336,9 @@ namespace CommonCore.Compatibility
             //higher is better
             return Mathf.Clamp(
                     1.0f
-                    + (character.DerivedStats.Stats[(int)StatType.Resilience] / 20f)
-                    + (character.DerivedStats.Stats[(int)StatType.Dexterity] / 30f)
-                    + (character.DerivedStats.Skills[(int)SkillType.MeleeBrawn] / 100f)
+                    + (character.DerivedStats.Stats[(int)CaliforniumStatType.Resilience] / 20f)
+                    + (character.DerivedStats.Stats[(int)CaliforniumStatType.Dexterity] / 30f)
+                    + (character.DerivedStats.Skills[(int)CaliforniumSkillType.MeleeBrawn] / 100f)
                     + (character.DerivedStats.Skills[(int)SkillType.Melee] / 200f),
                 0.5f, 2.0f);
         }
@@ -346,9 +348,9 @@ namespace CommonCore.Compatibility
             //lower is better
             return Mathf.Clamp(
                     1.0f
-                    - (character.DerivedStats.Stats[(int)StatType.Resilience] / 20f)
-                    - (character.DerivedStats.Stats[(int)StatType.Dexterity] / 30f)
-                    - (character.DerivedStats.Skills[(int)SkillType.MeleeBrawn] / 100f)
+                    - (character.DerivedStats.Stats[(int)CaliforniumStatType.Resilience] / 20f)
+                    - (character.DerivedStats.Stats[(int)CaliforniumStatType.Dexterity] / 30f)
+                    - (character.DerivedStats.Skills[(int)CaliforniumSkillType.MeleeBrawn] / 100f)
                     - (character.DerivedStats.Skills[(int)SkillType.Melee] / 200f),
                 0.5f, 2.0f);
         }
@@ -361,16 +363,16 @@ namespace CommonCore.Compatibility
             switch ((SkillType)itemModel.SkillType)
             {
                 case SkillType.Melee:
-                    factor -= character.DerivedStats.Skills[(int)SkillType.MeleeAlacrity] / 100f;
-                    factor -= character.DerivedStats.Stats[(int)StatType.Dexterity] / 100f;
+                    factor -= character.DerivedStats.Skills[(int)CaliforniumSkillType.MeleeAlacrity] / 100f;
+                    factor -= character.DerivedStats.Stats[(int)CaliforniumStatType.Dexterity] / 100f;
                     break;
                 case SkillType.Archery:
                     factor -= character.DerivedStats.Skills[(int)SkillType.Archery] / 400f; //you can't really increase archery fire rate much
-                    factor -= character.DerivedStats.Stats[(int)StatType.Dexterity] / 100f;
+                    factor -= character.DerivedStats.Stats[(int)CaliforniumStatType.Dexterity] / 100f;
                     break;
                 case SkillType.Guns:
-                    factor -= character.DerivedStats.Skills[(int)SkillType.GunsRapidity] / 100f;
-                    factor -= character.DerivedStats.Stats[(int)StatType.Dexterity] / 200f;
+                    factor -= character.DerivedStats.Skills[(int)CaliforniumSkillType.GunsRapidity] / 100f;
+                    factor -= character.DerivedStats.Stats[(int)CaliforniumStatType.Dexterity] / 200f;
                     break;
             }
 
@@ -385,8 +387,8 @@ namespace CommonCore.Compatibility
             switch ((SkillType)itemModel.SkillType)
             {
                 case SkillType.Guns:
-                    factor -= character.DerivedStats.Skills[(int)SkillType.GunsRapidity] / 100f;
-                    factor -= character.DerivedStats.Stats[(int)StatType.Dexterity] / 100f;
+                    factor -= character.DerivedStats.Skills[(int)CaliforniumSkillType.GunsRapidity] / 100f;
+                    factor -= character.DerivedStats.Stats[(int)CaliforniumStatType.Dexterity] / 100f;
                     break;
             }
 
@@ -401,12 +403,12 @@ namespace CommonCore.Compatibility
             switch ((SkillType)itemModel.SkillType)
             {
                 case SkillType.Archery:
-                    factor -= character.DerivedStats.Skills[(int)SkillType.ArcherySteady] / 100f;
-                    factor -= character.DerivedStats.Stats[(int)StatType.Dexterity] / 100f;
+                    factor -= character.DerivedStats.Skills[(int)CaliforniumSkillType.ArcherySteady] / 100f;
+                    factor -= character.DerivedStats.Stats[(int)CaliforniumStatType.Dexterity] / 100f;
                     break;
                 case SkillType.Guns:
-                    factor -= character.DerivedStats.Skills[(int)SkillType.GunsAccuracy] / 100f;
-                    factor -= character.DerivedStats.Stats[(int)StatType.Dexterity] / 100f;
+                    factor -= character.DerivedStats.Skills[(int)CaliforniumSkillType.GunsAccuracy] / 100f;
+                    factor -= character.DerivedStats.Stats[(int)CaliforniumStatType.Dexterity] / 100f;
                     break;
             }
 
@@ -421,12 +423,12 @@ namespace CommonCore.Compatibility
             switch ((SkillType)itemModel.SkillType)
             {
                 case SkillType.Archery:
-                    factor -= character.DerivedStats.Skills[(int)SkillType.ArcherySteady] / 100f;
-                    factor -= character.DerivedStats.Stats[(int)StatType.Dexterity] / 100f;
+                    factor -= character.DerivedStats.Skills[(int)CaliforniumSkillType.ArcherySteady] / 100f;
+                    factor -= character.DerivedStats.Stats[(int)CaliforniumStatType.Dexterity] / 100f;
                     break;
                 case SkillType.Guns:
-                    factor -= character.DerivedStats.Skills[(int)SkillType.GunsAccuracy] / 200f;
-                    factor -= character.DerivedStats.Stats[(int)StatType.Dexterity] / 100f;
+                    factor -= character.DerivedStats.Skills[(int)CaliforniumSkillType.GunsAccuracy] / 200f;
+                    factor -= character.DerivedStats.Stats[(int)CaliforniumStatType.Dexterity] / 100f;
                     break;
             }
 
@@ -441,12 +443,12 @@ namespace CommonCore.Compatibility
             switch ((SkillType)itemModel.SkillType)
             {
                 case SkillType.Archery:
-                    factor += character.DerivedStats.Skills[(int)SkillType.ArcherySteady] / 100f;
-                    factor += character.DerivedStats.Stats[(int)StatType.Dexterity] / 50f;
+                    factor += character.DerivedStats.Skills[(int)CaliforniumSkillType.ArcherySteady] / 100f;
+                    factor += character.DerivedStats.Stats[(int)CaliforniumStatType.Dexterity] / 50f;
                     break;
                 case SkillType.Guns:
-                    factor += character.DerivedStats.Skills[(int)SkillType.GunsAccuracy] / 200f;
-                    factor += character.DerivedStats.Stats[(int)StatType.Dexterity] / 50f;
+                    factor += character.DerivedStats.Skills[(int)CaliforniumSkillType.GunsAccuracy] / 200f;
+                    factor += character.DerivedStats.Stats[(int)CaliforniumStatType.Dexterity] / 50f;
                     break;
             }
 
@@ -461,22 +463,22 @@ namespace CommonCore.Compatibility
             switch ((SkillType)itemModel.SkillType)
             {
                 case SkillType.Melee:
-                    factor += character.DerivedStats.Stats[(int)StatType.Resilience] / 20f;
-                    factor += character.DerivedStats.Stats[(int)StatType.Dexterity] / 30f;
-                    factor += character.DerivedStats.Skills[(int)SkillType.MeleeBrawn] / 100f;
+                    factor += character.DerivedStats.Stats[(int)CaliforniumStatType.Resilience] / 20f;
+                    factor += character.DerivedStats.Stats[(int)CaliforniumStatType.Dexterity] / 30f;
+                    factor += character.DerivedStats.Skills[(int)CaliforniumSkillType.MeleeBrawn] / 100f;
                     factor += character.DerivedStats.Skills[(int)SkillType.Melee] / 200f;
                     if (!itemModel.CheckFlag(ItemFlag.WeaponNeverRandomize))
                     {
-                        float invPrecision = Mathf.Clamp(100f - character.DerivedStats.Skills[(int)SkillType.MeleePrecision], 0, 100f);
+                        float invPrecision = Mathf.Clamp(100f - character.DerivedStats.Skills[(int)CaliforniumSkillType.MeleePrecision], 0, 100f);
                         float precisionMax = invPrecision / 200f;
                         float randomFactor = UnityEngine.Random.Range(0, precisionMax);
                         factor -= randomFactor;
                     }
                     break;
                 case SkillType.Archery:
-                    factor += character.DerivedStats.Skills[(int)SkillType.ArcheryDraw] / 100f;
-                    factor += character.DerivedStats.Stats[(int)StatType.Resilience] / 50f;
-                    factor += character.DerivedStats.Stats[(int)StatType.Dexterity] / 50f;
+                    factor += character.DerivedStats.Skills[(int)CaliforniumSkillType.ArcheryDraw] / 100f;
+                    factor += character.DerivedStats.Stats[(int)CaliforniumStatType.Resilience] / 50f;
+                    factor += character.DerivedStats.Stats[(int)CaliforniumStatType.Dexterity] / 50f;
                     break;
             }
 
@@ -491,14 +493,14 @@ namespace CommonCore.Compatibility
             switch ((SkillType)itemModel.SkillType)
             {
                 case SkillType.Melee:
-                    factor -= character.DerivedStats.Skills[(int)SkillType.MeleePrecision] / 100f;
-                    factor -= character.DerivedStats.Stats[(int)StatType.Dexterity] / 100f;
-                    factor -= character.DerivedStats.Stats[(int)StatType.Resilience] / 100f;
+                    factor -= character.DerivedStats.Skills[(int)CaliforniumSkillType.MeleePrecision] / 100f;
+                    factor -= character.DerivedStats.Stats[(int)CaliforniumStatType.Dexterity] / 100f;
+                    factor -= character.DerivedStats.Stats[(int)CaliforniumStatType.Resilience] / 100f;
                     break;
                 case SkillType.Archery:
                     factor -= character.DerivedStats.Skills[(int)SkillType.Archery] / 200f;
-                    factor -= character.DerivedStats.Skills[(int)SkillType.ArcheryDraw] / 100f;
-                    factor -= character.DerivedStats.Stats[(int)StatType.Dexterity] / 100f;
+                    factor -= character.DerivedStats.Skills[(int)CaliforniumSkillType.ArcheryDraw] / 100f;
+                    factor -= character.DerivedStats.Stats[(int)CaliforniumStatType.Dexterity] / 100f;
                     break;
             }
 

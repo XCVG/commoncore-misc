@@ -7,6 +7,7 @@ Various bits and pieces for [CommonCore](https://github.com/XCVG/commoncore/). A
 ## Index
 
 * **Compatibility** Helpers for backwards compatibility with older versions of CommonCore, ie for upgrading projects. Mostly code files that can be dropped in piecemeal as needed.
+* **CaliforniumRpgCompatibility** Code files and resources that provide the old stats, skills, and RPG calculations intended for Ascension III after those were removed in CommonCore 4.
 
 ## License
 
