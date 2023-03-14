@@ -178,17 +178,23 @@ namespace Vnx
             var panelImage = ChoicePanel.GetComponent<Image>();
             if (height == ChoicePanelHeight.Half)
             {
-                panelImage.sprite = HalfPanel;
-                //panelImage.type = HalfPanel.
-                ChoicePanel.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, HalfPanel.rect.height * (100 / HalfPanel.pixelsPerUnit));
-                ChoicePanel.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, HalfPanel.rect.width * (100 / HalfPanel.pixelsPerUnit));
+                if(HalfPanel != null)
+                {
+                    panelImage.sprite = HalfPanel;
+                    //panelImage.type = HalfPanel.
+                    ChoicePanel.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, HalfPanel.rect.height * (100 / HalfPanel.pixelsPerUnit));
+                    ChoicePanel.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, HalfPanel.rect.width * (100 / HalfPanel.pixelsPerUnit));
+                }                
             }
             else if (height == ChoicePanelHeight.Full || height == ChoicePanelHeight.Default)
             {
-                panelImage.sprite = FullPanel;
-                //panelImage.type = HalfPanel.
-                ChoicePanel.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, FullPanel.rect.height * (100 / FullPanel.pixelsPerUnit));
-                ChoicePanel.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, FullPanel.rect.width * (100 / FullPanel.pixelsPerUnit));
+                if(FullPanel != null)
+                {
+                    panelImage.sprite = FullPanel;
+                    //panelImage.type = HalfPanel.
+                    ChoicePanel.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, FullPanel.rect.height * (100 / FullPanel.pixelsPerUnit));
+                    ChoicePanel.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, FullPanel.rect.width * (100 / FullPanel.pixelsPerUnit));
+                }                
             }
             
         }
