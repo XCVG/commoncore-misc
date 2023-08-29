@@ -8,7 +8,7 @@ Various bits and pieces for [CommonCore](https://github.com/XCVG/commoncore/). A
 
 * **Compatibility** Helpers for backwards compatibility with older versions of CommonCore, ie for upgrading projects. Mostly code files that can be dropped in piecemeal as needed.
 * **CaliforniumRpgCompatibility** Code files and resources that provide the old stats, skills, and RPG calculations intended for Ascension III after those were removed in CommonCore 4.
-* **VNX** Visual novel extension components originally created for [See Who I Am](https://xcvg.itch.io/see-who-i-am). Probably won't work out of the box without a bit of work.
+* ~~**VNX** Visual novel extension components originally created for [See Who I Am](https://xcvg.itch.io/see-who-i-am). Probably won't work out of the box without a bit of work.~~ Moved to mainline in CommonCore 6.
 
 ## License
 
